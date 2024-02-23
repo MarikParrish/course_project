@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= movie.title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="movie-details">
+        <a href="http://localhost:3000" class="back-btn">Back</a>
+        <div class="movie-info-container">
+            <img src="<%= movie.image_url %>" alt="Poster" class="movie-image">
+            <div class="movie-info">
+                <h1 class="movie-info-title"><%= movie.title %></h1>
+                <p class="movie-info-item">Жанр: <%= movie.genre %></p>
+                <p class="movie-info-item">Рейтинг: <%= movie.rating %></p>
+                <p class="movie-info-item">Рік: <%= movie.release_year %></p>
+                <p class="movie-info-item">Країна: <%= movie.country %></p>
+            </div>
+        </div>
+        <p class="movie-description">Опис: <%= movie.description %></p>
+    </div>
+</body>
+
+</html>

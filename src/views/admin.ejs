@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #555;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <h1>Admin Panel</h1>
+        <button class="admin-btn" onclick="openAddMovieForm()">Add Movie</button>
+        <button class="admin-btn" onclick="openDeleteMovieForm()">Delete Movie</button>
+        <a class="back-btn" href="http://localhost:3000">Back</a>
+    </div>
+
+    <form action="/admin/add-movie" method="post" enctype="multipart/form-data" id="addMovieForm" style="display:none;">
+        <h2>Add Movie</h2>
+        <label for="title">Назва:</label>
+        <input type="text" name="title" required>
+        <label for="genre">Жанр:</label>
+        <select id="genre" name="genre" required>
+            <option value="Екшн">Екшн</option>
+            <option value="Драма">Драма</option>
+            <option value="Комедія">Комедія</option>
+            <option value="Детектив">Детектив</option>
+            <option value="Трилер">Трилер</option>
+            <option value="Фантастичний">Фантастичний</option>
+            <option value="Кримінальний">Кримінальний</option>
+            <option value="Історичний">Історичний</option>
+            <option value="Вестерн">Вестерн</option>
+        </select>
+        <label for="rating">Рейтинг:</label>
+        <input type="text" name="rating" required>
+        <label for="releaseYear">Рік:</label>
+        <input type="text" name="releaseYear" required>
+        <label for="image">Постер:</label>
+        <input type="file" name="image" accept="image/*">
+        <br>
+        <br>
+        <div class="movie-description">
+            <label for="description">Опис:</label>
+            <textarea name="description" rows="4" cols="50"></textarea>
+            <label for="country">Країна:</label>
+            <input type="text" name="country">
+            <button class="admin-btn" type="submit">Підтвердити</button>
+        </div>
+    </form>
+
+    <form action="/admin/delete-movie" method="post" id="deleteMovieForm" style="display:none;">
+        <h2>Delete Movie</h2>
+        <label for="movieId">Фільм ID:</label>
+        <input type="text" name="movieId" required>
+        <button type="submit">Видалити</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% movies.forEach(movie => { %>
+            <tr>
+                <td><%= movie.id %></td>
+                <td><%= movie.title %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <script>
+        function openAddMovieForm() {
+            document.getElementById('addMovieForm').style.display = 'block';
+            document.getElementById('deleteMovieForm').style.display = 'none';
+        }
+
+        function openDeleteMovieForm() {
+            document.getElementById('deleteMovieForm').style.display = 'block';
+            document.getElementById('addMovieForm').style.display = 'none';
+        }
+
+        document.getElementById('deleteMovieForm').addEventListener('submit', function (event) {
+            const confirmed = confirm('Are you sure you want to delete this movie?');
+            if (!confirmed) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+
+</html>

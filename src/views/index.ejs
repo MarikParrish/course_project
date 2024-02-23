@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies App</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Порадник фільмів</h1>
+            <a class="admin-link" href="/admin">Admin Page</a>
+        </div>
+
+        <form action="/" method="get">
+            <label for="title">Пошук за назвою:</label>
+            <input type="text" id="title" name="title" value="<%= title %>">
+            <button class="search-btn" type="submit">Пошук</button>
+        </form>
+
+        <form action="/" method="get">
+            <label for="genre">Жанр:</label>
+            <select id="genre" name="genre">
+                <option value="">Всі жанри</option>
+                <% genres.forEach(genreOption => { %>
+                <option value="<%= genreOption %>" <%= selectedGenre === genreOption ? 'selected' : '' %>>
+                    <%= genreOption %></option>
+                <% }); %>
+            </select>
+
+            <label for="rating">Рейтинг:</label>
+            <input type="text" id="rating" name="rating" pattern="^\d+(\.\d)?$" value="<%= selectedRating || '' %>">
+
+            <label class="release-year" for="releaseYear">Рік:</label>
+            <select id="releaseYear" name="releaseYear">
+                <option value="">Всі роки</option>
+                <% for (let year = 2024; year >= 2000; year--) { %>
+                <option value="<%= year %>" <%= releaseYear === year.toString() ? 'selected' : '' %>><%= year %>
+                </option>
+                <% } %>
+            </select>
+
+            <button type="submit">Застосувати</button>
+        </form>
+
+        <div class="movies-container">
+            <% movies.forEach(movie => { %>
+            <div class="movie-item">
+                <img src="<%= movie.image_url %>" alt="Poster" class="movie-poster">
+                <div class="movie-title"><a href="/movie/<%= encodeURIComponent(movie.title) %>"><%= movie.title %></a>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+
+</body>
+
+</html>
